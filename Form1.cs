@@ -17,7 +17,7 @@ namespace OOP03
             InitializeComponent();
         }
 
-        Spotrebic spotrebic = new Spotrebic("Ab-002C-K9", 2);
+        Spotrebic spotrebic = new Spotrebic("Ab*-002C-K9", 800);
         private void button1_Click(object sender, EventArgs e)
         {
             spotrebic.Zapni();

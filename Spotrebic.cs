@@ -24,19 +24,14 @@ namespace OOP03
                 string s = value;
                 for (int i = 0; i < s.Length; ++i)
                 {
-                    if (char.IsNumber(s[i])) 
-                    { }
+                    if (!char.IsLetter(s[i]) && !char.IsNumber(s[i]) && s[i] != '-')
+                    { s = s.Remove(i, 1) + s.Substring(i + 1); }
                     else if (char.IsLetter(s[i]))
                     {
                         if (char.IsLower(s[i]))
                         {
                             s = char.ToUpper(s[i]) + s.Substring(i + 1);
                         }
-                    }
-                    else if (s[i] == '-') { }
-                    else
-                    {
-                        s = s.Replace(s[i], '-') + s.Substring(i + 1);
                     }
                 }
                 kod = s;
@@ -51,7 +46,7 @@ namespace OOP03
         }
         public Spotrebic(string kod, double prikon)
         {
-            this.kod = kod;
+            Kod = kod;
             this.prikon = prikon;
         }
         public void Zapni()
@@ -81,7 +76,7 @@ namespace OOP03
         }
         public override string ToString()
         {
-            string s = "\nKód spotřebiče je: " + Kod + "\nCelková doba provozu je: " + celkovaDobaProvozu.TotalHours + " sekund\n" + "Celková spotřeba je: " + CelkovaSpotreba() + "Wh";
+            string s = "\nKód spotřebiče je: " + Kod + "\nCelková doba provozu je: " + celkovaDobaProvozu.TotalHours + " hodin\n" + "Celková spotřeba je: " + CelkovaSpotreba() + "Wh";
             return base.ToString() + s;
         }
 
