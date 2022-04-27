@@ -10,6 +10,7 @@ namespace OOP03
     {
         private string kod;
         private double prikon;
+        private double spotreba = 0;
         private TimeSpan celkovaDobaProvozu;
         private DateTime okamzikZapnuti;
         private bool jeVProvozu;
@@ -63,7 +64,6 @@ namespace OOP03
         }
         public double CelkovaSpotreba()
         {
-            double spotreba = 0;
             if (JeVProvozu)
             {
                 spotreba = double.Parse((DateTime.Now - okamzikZapnuti).TotalHours.ToString()) * prikon;
