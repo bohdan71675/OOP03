@@ -11,9 +11,9 @@ namespace OOP03
         private string kod;
         private double prikon;
         private double spotreba = 0;
-        private TimeSpan celkovaDobaProvozu;
+        private TimeSpan celkovaDobaProvozu = new TimeSpan(0);
         private DateTime okamzikZapnuti;
-        private bool jeVProvozu;
+        private bool jeVProvozu = false;
         public string Kod
         {
             get
@@ -23,18 +23,30 @@ namespace OOP03
             set
             {
                 string s = value;
-                for (int i = 0; i < s.Length; ++i)
+                s = value.ToUpper();
+                int i = 0;
+                while (i < s.Length)
                 {
-                    if (!char.IsLetter(s[i]) && !char.IsNumber(s[i]) && s[i] != '-')
-                    { s = s.Remove(i, 1) + s.Substring(i + 1); }
-                    else if (char.IsLetter(s[i]))
+                    if (!char.IsLetterOrDigit(s[i]) && !(s[i] == '-'))
                     {
-                        if (char.IsLower(s[i]))
-                        {
-                            s = char.ToUpper(s[i]) + s.Substring(i + 1);
-                        }
+                        s = s.Remove(i, 1);
                     }
+                    else ++i;
                 }
+
+                //for (int i = 0; i < s.Length; ++i)   SPATNE a SLOZITE
+                //{
+                //    if (!char.IsLetter(s[i]) && !char.IsNumber(s[i]) && s[i] != '-')
+                //    { s = s.Remove(i, 1) + s.Substring(i + 1); }
+                //    else if (char.IsLetter(s[i]))
+                //    {
+                //        if (char.IsLower(s[i]))
+                //        {
+                //            s = char.ToUpper(s[i]) + s.Substring(i + 1);
+                //        }
+                //    }
+                //}
+
                 kod = s;
             }
         }
@@ -64,19 +76,17 @@ namespace OOP03
         }
         public double CelkovaSpotreba()
         {
+            spotreba = celkovaDobaProvozu.TotalSeconds * prikon;
             if (JeVProvozu)
             {
-                spotreba = double.Parse((DateTime.Now - okamzikZapnuti).TotalHours.ToString()) * prikon;
+                spotreba += (DateTime.Now - okamzikZapnuti).TotalSeconds * prikon;
             }
-            else
-            {
-                spotreba = double.Parse(celkovaDobaProvozu.TotalHours.ToString()) * prikon;
-            }
+
             return spotreba;
         }
         public override string ToString()
         {
-            string s = "\nKód spotřebiče je: " + Kod + "\nCelková doba provozu je: " + celkovaDobaProvozu.TotalHours + " hodin\n" + "Celková spotřeba je: " + CelkovaSpotreba() + "Wh";
+            string s = "\nKód spotřebiče je: " + Kod + "\nCelková doba provozu je: " + celkovaDobaProvozu.TotalSeconds + " sekund\n" + "Celková spotřeba je: " + CelkovaSpotreba() + "Ws";
             return base.ToString() + s;
         }
 
